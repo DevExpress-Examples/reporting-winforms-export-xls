@@ -1,57 +1,39 @@
-﻿#region #usings
-using System;
-using System.Windows.Forms;
-using System.Diagnostics;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
-// ...
-#endregion #usings
+using System.Windows.Forms;
+using System;
 
-namespace ExportToXlsCS {
+namespace XlsExportExample {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
         }
 
-        #region #export
-        private void ExportToXLS() {
-            // A path to export a report.
-            string reportPath = "c:\\Test.xls";
+        private void simpleButton1_Click(object sender, EventArgs e) {
+            // Create a report.
+            XtraReport report = new XtraReport() {
+                Name = "Report Example",
+                Bands = {
+                    new DetailBand() {
+                        Controls = {
+                            new XRLabel() {
+                                Text = "Some content goes here...",
+                            }
+                        }
+                    }
+                }
+            };
 
-            // Create a report instance.
-            XtraReport1 report = new XtraReport1();
+            // Specify export options.
+            XlsExportOptions xlsExportOptions = new XlsExportOptions() {
+                ExportMode = XlsExportMode.SingleFile,
+                ShowGridLines = true,
+                FitToPrintedPageHeight = true
+            };
 
-            // Get its XLS export options.
-            XlsExportOptions xlsOptions = report.ExportOptions.Xls;
-
-            // Set XLS-specific export options.
-            xlsOptions.ShowGridLines = true;
-            xlsOptions.TextExportMode = TextExportMode.Value;
-
-            // Export the report to XLS.
-            report.ExportToXls(reportPath);
-
-            // Show the result.
-            StartProcess(reportPath);
+            // Export the report.
+            report.ExportToXls("test.xls", xlsExportOptions);
+            System.Diagnostics.Process.Start("test.xls");
         }
-        #endregion #export
-
-        private void button1_Click(object sender, EventArgs e) {
-            ExportToXLS();
-        }
-
-        #region #startprocess
-        // Use this method if you want to automaically open
-        // the created XLS file in the default program.
-        public void StartProcess(string path) {
-            Process process = new Process();
-            try {
-                process.StartInfo.FileName = path;
-                process.Start();
-                process.WaitForInputIdle();
-            }
-            catch { }
-        }
-        #endregion #startprocess
     }
 }

@@ -1,54 +1,33 @@
-'#Region "#usings"
-Imports System
-Imports System.Windows.Forms
-Imports System.Diagnostics
 Imports DevExpress.XtraPrinting
+Imports DevExpress.XtraReports.UI
+Imports System.Windows.Forms
+Imports System
 
-' ...
-'#End Region  ' #usings
-Namespace ExportToXlsCS
+Namespace XlsExportExample
+	Partial Public Class Form1
+		Inherits Form
 
-    Public Partial Class Form1
-        Inherits Form
+		Public Sub New()
+			InitializeComponent()
+		End Sub
 
-        Public Sub New()
-            InitializeComponent()
-        End Sub
+		Private Sub simpleButton1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles simpleButton1.Click
+			' Create a report.
+			Dim report As New XtraReport() With {.Name = "SampleReport"}
+			Dim detail As New DetailBand()
+			detail.Controls.Add(New XRLabel() With {.Text = "Some content goes here..."})
+			report.Bands.Add(detail)
 
-'#Region "#export"
-        Private Sub ExportToXLS()
-            ' A path to export a report.
-            Dim reportPath As String = "c:\Test.xls"
-            ' Create a report instance.
-            Dim report As XtraReport1 = New XtraReport1()
-            ' Get its XLS export options.
-            Dim xlsOptions As XlsExportOptions = report.ExportOptions.Xls
-            ' Set XLS-specific export options.
-            xlsOptions.ShowGridLines = True
-            xlsOptions.TextExportMode = TextExportMode.Value
-            ' Export the report to XLS.
-            report.ExportToXls(reportPath)
-            ' Show the result.
-            StartProcess(reportPath)
-        End Sub
+			' Specify export options.
+			Dim xlsExportOptions As New XlsExportOptions() With {
+				.ExportMode = XlsExportMode.SingleFile,
+				.ShowGridLines = True,
+				.FitToPrintedPageHeight = True
+			}
 
-'#End Region  ' #export
-        Private Sub button1_Click(ByVal sender As Object, ByVal e As EventArgs)
-            ExportToXLS()
-        End Sub
-
-'#Region "#startprocess"
-        ' Use this method if you want to automaically open
-        ' the created XLS file in the default program.
-        Public Sub StartProcess(ByVal path As String)
-            Dim process As Process = New Process()
-            Try
-                process.StartInfo.FileName = path
-                process.Start()
-                process.WaitForInputIdle()
-            Catch
-            End Try
-        End Sub
-'#End Region  ' #startprocess
-    End Class
+			' Export the report.
+			report.ExportToXls("test.xls", xlsExportOptions)
+			System.Diagnostics.Process.Start("test.xls")
+		End Sub
+	End Class
 End Namespace
