@@ -22,7 +22,7 @@ The example in this repository demonstrates how to export a report to XLS format
 - [How to export a report to XLSX format](https://github.com/DevExpress-Examples/Reporting_how-to-export-a-report-to-xlsx-format-e1539)
 - [Reporting for WinForms - Export Options and After Export Actions](https://github.com/DevExpress-Examples/reporting-winforms-export-options-actions)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=reporting-winforms-export-xls&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=reporting-winforms-export-xls&~~~was_helpful=no)
 
